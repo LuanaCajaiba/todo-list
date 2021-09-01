@@ -14,12 +14,27 @@ class App extends Component {
     //  a função é igual a ela mesma conectada ao this
     this.createTask = this.createTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.updateTask = this.updateTask.bind(this);
   }
 
   createTask(newTask){
     const { tasks } = this.state;
     this.setState({
       tasks: [...tasks, newTask], 
+    });
+  }
+
+  updateTask(updatedTask){
+    const { tasks } = this.state;
+    const updatedTasks = tasks.map((task) => {
+      const taskToUpdate = task;
+      if (taskToUpdate.id === updatedTask.id){
+        taskToUpdate.hasFinished = updatedTask.hasFinished;
+      }
+      return taskToUpdate;
+    });
+    this.setState({
+      tasks: updatedTasks,
     });
   }
 
@@ -40,6 +55,7 @@ class App extends Component {
           <Task 
             key={task.id} 
             data={task}
+            onUpdate={this.updateTask}
             onRemove={this.removeTask} 
           />
         )) }
