@@ -14,8 +14,7 @@ class App extends Component {
     this.createTask = this.createTask.bind(this);
   }
 
-  createTask(event, newTask){
-    event.preventDefault();
+  createTask(newTask){
     const { tasks } = this.state;
     this.setState({
       tasks: [...tasks, newTask], 
@@ -23,9 +22,14 @@ class App extends Component {
   }
 
   render(){ 
+    const { tasks } = this.state;
     return (
-
-      <AddTask onCreate={this.createTask} /> 
+      <>
+        <AddTask onCreate={this.createTask} /> 
+        { tasks.map((task) => (
+          <h1 key={task.id}>{task.title}</h1>
+        )) }
+      </>
     );
   } 
 }
