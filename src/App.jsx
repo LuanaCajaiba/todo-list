@@ -13,6 +13,7 @@ class App extends Component {
     //  forma de resolver o bug (this is undefined)
     //  a função é igual a ela mesma conectada ao this
     this.createTask = this.createTask.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   createTask(newTask){
@@ -22,13 +23,25 @@ class App extends Component {
     });
   }
 
+  removeTask(id) {
+    const { tasks } = this.state;
+    const updateTasks = tasks.filter((task) => task.id !== id);
+    this.setState({
+      tasks: updateTasks,
+    });
+  }
+
   render(){ 
     const { tasks } = this.state;
     return (
       <>
         <AddTask onCreate={this.createTask} /> 
         { tasks.map((task) => (
-          <Task key={task.id} data={task} />
+          <Task 
+            key={task.id} 
+            data={task}
+            onRemove={this.removeTask} 
+          />
         )) }
       </>
     );
