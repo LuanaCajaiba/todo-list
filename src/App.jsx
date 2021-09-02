@@ -15,6 +15,7 @@ class App extends Component {
     this.createTask = this.createTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.updateTask = this.updateTask.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +68,16 @@ class App extends Component {
     localStorage.setItem('tasks', JSON.stringify(updateTasks));
   }
 
+  editTask(id){
+    const { tasks } = this.state;
+    const updateTasks = tasks.find((task) => task.id === id);
+    this.setState({
+      tasks: updateTasks,
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(updateTasks));
+  }
+
   render(){ 
     const { tasks } = this.state;
     return (
@@ -78,6 +89,7 @@ class App extends Component {
             data={task}
             onUpdate={this.updateTask}
             onRemove={this.removeTask}
+            onEdit={this.editTask}
             hasFinished={task.hasFinished} 
           />
         )) }
